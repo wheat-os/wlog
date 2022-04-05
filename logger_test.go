@@ -2,6 +2,7 @@ package wlog
 
 import (
 	"errors"
+	"fmt"
 	"testing"
 )
 
@@ -22,4 +23,15 @@ func Test_logger(t *testing.T) {
 	logger.Info("错误")
 	logger.Error("发生错误")
 	logger.Error("发生错误2")
+}
+
+func Test_Color(t *testing.T) {
+
+	userFormat := "%s %s %d"
+	userArgs := []interface{}{"不好", "失败", 30}
+
+	colorFormat := "\033[1;31;40m%s\033[0m\n"
+	colorFormat = fmt.Sprintf(colorFormat, userFormat)
+
+	fmt.Printf(colorFormat, userArgs...)
 }
