@@ -2,6 +2,7 @@ package wlog
 
 import (
 	"bytes"
+	"os"
 	"runtime"
 	"strings"
 	"time"
@@ -12,7 +13,6 @@ import (
 type Entry struct {
 	logger *logger
 	Buffer *bytes.Buffer
-	Map    map[string]interface{}
 	Level  Level
 	Time   time.Time
 	File   string
@@ -23,7 +23,7 @@ type Entry struct {
 }
 
 func entry(logger *logger) *Entry {
-	return &Entry{logger: logger, Buffer: bytes.NewBuffer(nil), Map: make(map[string]interface{})}
+	return &Entry{logger: logger, Buffer: bytes.NewBuffer(nil)}
 }
 
 func (e *Entry) Write(level Level, format string, args ...interface{}) {
@@ -58,6 +58,11 @@ func (e *Entry) format() {
 }
 
 func (e *Entry) writer() {
+
+	// 标准输出优化
+	if e.logger.opt.output == os.Stderr || e.logger.opt.output == os.Stdout {
+		e.Buffer.WriteString("\n")
+	}
 	e.logger.mu.Lock()
 	e.logger.opt.output.Write(e.Buffer.Bytes())
 	e.logger.mu.Unlock()
