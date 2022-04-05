@@ -50,6 +50,7 @@ func (e *Entry) Write(level Level, format string, args ...interface{}) {
 
 	e.format()
 	e.writer()
+	e.hooks()
 	e.release()
 }
 
@@ -73,4 +74,8 @@ func (e *Entry) release() {
 	e.Args, e.Line, e.File, e.Format, e.Func = nil, 0, "", "", ""
 	e.Buffer.Reset()
 	e.logger.entryPool.Put(e)
+}
+
+func (e *Entry) hooks() {
+	e.logger.opt.hook.Handler(e.Level, e.Buffer.Bytes())
 }
