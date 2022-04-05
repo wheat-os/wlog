@@ -72,6 +72,9 @@ type options struct {
 
 	// 打开堆栈打印
 	disableCaller bool
+
+	// 执行钩子
+	hook Hook
 }
 
 type OptionFunc func(*options)
