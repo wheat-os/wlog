@@ -15,12 +15,12 @@ const (
 type Level uint8
 
 const (
-	DebugLevel Level = iota + 1
-	InfoLevel
-	WarnLevel
-	ErrorLevel
-	PanicLevel
-	FatalLevel
+	DebugLevel = 1 << 0
+	InfoLevel  = 1 << 1
+	WarnLevel  = 1 << 2
+	ErrorLevel = 1 << 3
+	PanicLevel = 1 << 4
+	FatalLevel = 1 << 5
 )
 
 var LevelNameMapping = map[Level]string{

@@ -36,11 +36,9 @@ func (t *TextFormatter) Format(entry *Entry) error {
 	switch entry.Format {
 	// 无特殊输出，采用 %v
 	case FmtEmptySeparate:
-		entry.Buffer.WriteString(fmt.Sprintln(entry.Args...))
+		entry.Buffer.WriteString(fmt.Sprint(entry.Args...))
 	default:
 		entry.Buffer.WriteString(fmt.Sprintf(entry.Format, entry.Args...))
 	}
-	entry.Buffer.WriteString("\n")
-
 	return nil
 }
