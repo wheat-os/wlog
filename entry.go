@@ -77,5 +77,7 @@ func (e *Entry) release() {
 }
 
 func (e *Entry) hooks() {
-	e.logger.opt.hook.Handler(e.Level, e.Buffer.Bytes())
+	if e.logger.opt.hook != nil {
+		e.logger.opt.hook.Handler(e.Level, e.Buffer.Bytes())
+	}
 }
