@@ -104,3 +104,7 @@ func WithLogLevelColor(level Level, font Attribute) OptionFunc {
 		o.logColors[level].Add(color.Attribute(font))
 	}
 }
+
+func (l *logColor) SetOtherAttribute(attributes ...color.Attribute) {
+	l.Add(attributes...)
+}
