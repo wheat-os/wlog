@@ -1,6 +1,72 @@
 package wlog
 
-import "github.com/fatih/color"
+import (
+	"github.com/fatih/color"
+)
+
+type Attribute color.Attribute
+
+// Base attributes
+const (
+	Reset Attribute = iota
+	Bold
+	Faint
+	Italic
+	Underline
+	BlinkSlow
+	BlinkRapid
+	ReverseVideo
+	Concealed
+	CrossedOut
+)
+
+// Foreground text colors
+const (
+	FgBlack Attribute = iota + 30
+	FgRed
+	FgGreen
+	FgYellow
+	FgBlue
+	FgMagenta
+	FgCyan
+	FgWhite
+)
+
+// Foreground Hi-Intensity text colors
+const (
+	FgHiBlack Attribute = iota + 90
+	FgHiRed
+	FgHiGreen
+	FgHiYellow
+	FgHiBlue
+	FgHiMagenta
+	FgHiCyan
+	FgHiWhite
+)
+
+// Background text colors
+const (
+	BgBlack Attribute = iota + 40
+	BgRed
+	BgGreen
+	BgYellow
+	BgBlue
+	BgMagenta
+	BgCyan
+	BgWhite
+)
+
+// Background Hi-Intensity text colors
+const (
+	BgHiBlack Attribute = iota + 100
+	BgHiRed
+	BgHiGreen
+	BgHiYellow
+	BgHiBlue
+	BgHiMagenta
+	BgHiCyan
+	BgHiWhite
+)
 
 type logColor struct {
 	level Level
@@ -8,39 +74,33 @@ type logColor struct {
 }
 
 var (
-	DebugColor = newColor(color.BgBlack, color.FgCyan, DebugLevel)
-	InfoColor  = newColor(color.BgBlack, color.FgGreen, InfoLevel)
-	WarnColor  = newColor(color.BgBlack, color.FgYellow, WarnLevel)
-	ErrorColor = newColor(color.BgBlack, color.FgRed, ErrorLevel)
-	PanicColor = newColor(color.BgBlack, color.FgMagenta, PanicLevel)
-	FatalColor = newColor(color.BgBlack, color.FgHiBlack, FatalLevel)
+	debugColor = newColor(FgCyan, DebugLevel)
+	infoColor  = newColor(FgGreen, InfoLevel)
+	warnColor  = newColor(FgYellow, WarnLevel)
+	errorColor = newColor(FgRed, ErrorLevel)
+	panicColor = newColor(FgMagenta, PanicLevel)
+	fatalColor = newColor(FgHiBlack, FatalLevel)
 
 	logColors = map[Level]*logColor{
-		DebugLevel: DebugColor,
-		InfoLevel:  InfoColor,
-		WarnLevel:  WarnColor,
-		ErrorLevel: ErrorColor,
-		PanicLevel: PanicColor,
-		FatalLevel: FatalColor,
+		DebugLevel: debugColor,
+		InfoLevel:  infoColor,
+		WarnLevel:  warnColor,
+		ErrorLevel: errorColor,
+		PanicLevel: panicColor,
+		FatalLevel: fatalColor,
 	}
 )
 
-func newColor(background color.Attribute, font color.Attribute, leve Level) *logColor {
+func newColor(font Attribute, leve Level) *logColor {
 	c := new(logColor)
 	c.level = leve
-	c.Color = color.New(background, font)
+	c.Color = color.New(color.Attribute(font))
 	c.EnableColor()
 	return c
 }
 
-func (l *logColor) SetBackgroundColor(background color.Attribute) {
-	l.Add(background)
-}
-
-func (l *logColor) SetFontColor(font color.Attribute) {
-	l.Add(font)
-}
-
-func (l *logColor) SetOtherAttribute(attributes ...color.Attribute) {
-	l.Add(attributes...)
+func SetLogLevelColor(level Level, font Attribute) OptionFunc {
+	return func(o *options) {
+		o.logColors[level].Add(color.Attribute(font))
+	}
 }

@@ -75,6 +75,9 @@ type options struct {
 
 	// 执行钩子
 	hook Hook
+
+	// 日志颜色等级
+	logColors map[Level]*logColor
 }
 
 type OptionFunc func(*options)
@@ -93,6 +96,10 @@ func initOptions(opts ...OptionFunc) *options {
 
 	if o.formatter == nil {
 		o.formatter = &TextFormatter{}
+	}
+
+	if o.logColors == nil {
+		o.logColors = logColors
 	}
 
 	return o

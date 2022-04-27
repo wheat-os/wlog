@@ -62,7 +62,10 @@ func (e *Entry) writer() {
 
 	// 标准输出优化
 	if e.logger.opt.output == os.Stderr || e.logger.opt.output == os.Stdout {
-		e.Buffer.WriteString("\n")
+
+		l := e.logger.opt.logColors[e.Level].Sprintf("%s%s", e.Buffer.String(), "\n")
+		e.Buffer.Reset()
+		e.Buffer.WriteString(l)
 	}
 	e.logger.mu.Lock()
 	e.logger.opt.output.Write(e.Buffer.Bytes())
