@@ -13,7 +13,7 @@ func TestColor(t *testing.T) {
 
 func TestChangeLogColor(t *testing.T) {
 	Info("11111")
-	SetStdOptions(SetLogLevelColor(InfoLevel, FgHiYellow))
+	SetStdOptions(WithLogLevelColor(InfoLevel, FgHiYellow))
 
 	Info("1111")
 }

@@ -99,7 +99,7 @@ func newColor(font Attribute, leve Level) *logColor {
 	return c
 }
 
-func SetLogLevelColor(level Level, font Attribute) OptionFunc {
+func WithLogLevelColor(level Level, font Attribute) OptionFunc {
 	return func(o *options) {
 		o.logColors[level].Add(color.Attribute(font))
 	}
