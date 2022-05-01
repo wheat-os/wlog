@@ -39,6 +39,7 @@ func (t *TextFormatter) Format(entry *Entry) error {
 		entry.Buffer.WriteString(fmt.Sprint(entry.Args...))
 	default:
 		entry.Buffer.WriteString(fmt.Sprintf(entry.Format, entry.Args...))
+
 	}
 	return nil
 }
