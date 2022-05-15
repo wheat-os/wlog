@@ -19,12 +19,12 @@ const (
 )
 
 func (t *TextFormatter) Format(entry *Entry) error {
-	entry.Buffer.WriteString(fmt.Sprintf("%s %s", entry.Time.Format(formatTime), LevelNameMapping[entry.Level]))
+	entry.Buffer.WriteString(fmt.Sprintf("%s %s ", entry.Time.Format(formatTime), LevelNameMapping[entry.Level]))
 	if !t.ignoreBasicFields {
 		// 写入时间 level 信息
 		if entry.File != "" {
 			// 获取文件名
-			entry.Buffer.WriteString(fmt.Sprintf(" %s:%d ", entry.File, entry.Line))
+			entry.Buffer.WriteString(fmt.Sprintf("%s:%d ", entry.File, entry.Line))
 		}
 	}
 
