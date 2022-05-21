@@ -1,0 +1,1 @@
+2022-05-21 18:47:19 INFO /home/bandl/go/src/github.com/wheat-os/wlog/example/logger_example_test.go:20 123123 map[qqq:111]2022-05-21 18:47:19 DEBUG /home/bandl/go/src/github.com/wheat-os/wlog/example/logger_example_test.go:21 123123 map[qqq:111]

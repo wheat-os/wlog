@@ -1,9 +1,10 @@
 package example
 
 import (
-	"gitee.com/wheat-os/wlog"
 	"os"
 	"testing"
+
+	"github.com/wheat-os/wlog"
 )
 
 func TestExample(t *testing.T) {
