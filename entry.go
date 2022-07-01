@@ -49,8 +49,8 @@ func (e *Entry) Write(level Level, format string, args ...interface{}) {
 	}
 
 	e.format()
-	e.writer()
 	e.hooks()
+	e.writer()
 	e.release()
 }
 
